@@ -1,0 +1,18 @@
+Splitter, v.1.0 (c) 2012 Vorobyev Alexander
+
+~ About:
+
+Splitter  - a small utility to split a text file into multiple files
+by the number of rows"
+
+~ Build:
+
+cmake .
+make
+
+
+~ Information:
+
+Home Page:	http://va-soft.ru/
+Autor:		Alexander Vorobyev (Voral)
+
