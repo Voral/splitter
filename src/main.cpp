@@ -39,7 +39,7 @@ int main(int argc, char** argv)
 		printf("splitter v.1.0 (c) 2012 Alexander Vorobyev, http://va-soft.ru/\n\nUsing: splitter [options] <input_filename>\n"
 				"\tOptions:\n"
 				"\t\t-s\tShow the progress information\n"
-				"\t\t-rX\tX rows per file\n"
+				"\t\t-rX\tX rows per file (by default 10000 rows)\n"
 				"\tSample:\n"
 				"\t\tsplitter -s -t2000 input.txt\n"
 		);
@@ -107,10 +107,12 @@ int main(int argc, char** argv)
 }
 void makeMask(char *name, char *mask)
 {
+	int fAdded = 0;
 	for(;*name != '\0';++name)
 	{
 		if (*name == '.')
 		{
+			fAdded = 1;
 			*mask = '_';
 			++mask;
 			*mask = '%';
@@ -124,6 +126,18 @@ void makeMask(char *name, char *mask)
 		}
 		*mask = *name;
 		++mask;
+	}
+	if (fAdded == 0)
+	{
+		*mask = '_';
+		++mask;
+		*mask = '%';
+		++mask;
+		*mask = '0';
+		++mask;
+		*mask = '3';
+		++mask;
+		*mask = 'd';
 	}
 }
 unsigned int getRows(char *arg)
