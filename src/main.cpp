@@ -97,8 +97,8 @@ int main(int argc, char** argv)
 		fclose (fin);
 	}
 	printf("\r");
-	if (exitCode==ECODE_FILE_IN) perror ("Error opening input file\n");
-	else if (exitCode==ECODE_FILE_OUT) perror ("Error opening output file\n");
+	if (exitCode==ECODE_FILE_IN) perror ("Error opening input file");
+	else if (exitCode==ECODE_FILE_OUT) perror ("Error opening output file");
 	
 	free(mask);
 	free(fileName);
@@ -107,37 +107,35 @@ int main(int argc, char** argv)
 }
 void makeMask(char *name, char *mask)
 {
-	int fAdded = 0;
+	char *index = 0;
 	for(;*name != '\0';++name)
 	{
 		if (*name == '.')
 		{
-			fAdded = 1;
-			*mask = '_';
-			++mask;
-			*mask = '%';
-			++mask;
-			*mask = '0';
-			++mask;
-			*mask = '3';
-			++mask;
-			*mask = 'd';
-			++mask;
+			index = mask;
+			mask+=5;
 		}
 		*mask = *name;
 		++mask;
 	}
-	if (fAdded == 0)
+	if (index != 0)
 	{
-		*mask = '_';
+		*mask = '\0';
+		mask = index;
+	}
+	*mask = '_';
+	++mask;
+	*mask = '%';
+	++mask;
+	*mask =  '0';
+	++mask;
+	*mask = '3';
+	++mask;
+	*mask = 'd';
+	if (index == 0)
+	{
 		++mask;
-		*mask = '%';
-		++mask;
-		*mask = '0';
-		++mask;
-		*mask = '3';
-		++mask;
-		*mask = 'd';
+		*mask = '\0';
 	}
 }
 unsigned int getRows(char *arg)
